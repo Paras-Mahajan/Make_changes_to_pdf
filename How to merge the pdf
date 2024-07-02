@@ -1,0 +1,27 @@
+from PyPDF2 import PdfWriter
+# user_directory : Path where pdfs are stored
+merger = PdfWriter()
+
+import os
+
+files = [x for x in os.listdir(user_directory) if '.pdf' in x ]
+
+# for pdf in files:
+# 	merger.append(pdf)
+
+# merger.write('demo.pdf')
+# merger.close()
+
+input1 = open(files[0], mode='rb')
+input2 = open(files[1], mode='rb')
+
+from PyPDF2 import PdfWriter
+merger = PdfWriter()
+merger.append(fileobj=input1, pages=(0,1)) 
+merger.merge(position=2, fileobj=input4, pages=(0,1))
+
+output = open('new_doc.pdf', 'wb')
+merger.write(output)
+
+merger.close()
+output.close()
