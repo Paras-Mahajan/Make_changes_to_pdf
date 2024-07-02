@@ -1,0 +1,32 @@
+from pathlib import Path
+from PyPDF2 import PdfWriter, PdfReader
+
+  def watermark(
+	content_pdf: Path,
+	stamp_pdf: Path,
+	pdf_result: Path,):
+
+	reader1 = PdfReader(stamp_pdf)
+	stamp_page = reader1.pages[0]
+
+	reader2 = PdfReader(content_pdf)
+
+	page_indices = list(range(0,len(reader2.pages)))
+
+	writer = PdfWriter()
+
+	for index in page_indices:
+		content_page = reader2.pages[index]
+		mediabox = content_page.mediabox
+		content_page.merge_page(stamp_page)
+		content_page.mediabox = mediabox # mediabox is used to make the size as it is
+		writer.add_page(content_page)
+
+	with open(pdf_result, 'wb') as file:
+		writer.write(file)
+
+content_path = path
+stamp_path = path
+pdf_result = path
+
+watermark(content_path, stamp_path, pdf_result)
